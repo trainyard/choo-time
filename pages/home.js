@@ -1,5 +1,7 @@
 const html = require('choo/html')
 
+const changeHistory = e => send('focus', idx)
+
 module.exports = (state, prev, send) => html`
   <main>
     Explore History (${state.history.length})
