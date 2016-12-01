@@ -4,21 +4,21 @@ const changeHistory = e => send('focus', idx)
 
 module.exports = (state, prev, send) => html`
   <main>
-    Explore History (${state.history.length})
-    <div> 
-      Actions
-      <ul>
+    <div class="action-col"> 
+      <header class="list-header">Actions</header>
+      <ul class="list">
           ${state.history.map(({actionName, argsPassedToAction, resultingState}, idx) => {
             return html`
-              <li onclick=${e => send('focus', idx)}>
-                  ${actionName} ${argsPassedToAction}
+              <li>
+                <button type="button" onclick=${e => send('focus', idx)}>
+                  ${actionName} ${ argsPassedToAction ? '::' : '' } ${argsPassedToAction}
+                </button>
               </li>`
           })}
       </ul>
     </div>
-    <hr />
-    <div>
-      ${JSON.stringify(state.focusPayload)}
+    <div class="state-col">
+      <textarea>${JSON.stringify(state.focusPayload, null, 2)}</textarea>
     </div>
   </main>
 `
