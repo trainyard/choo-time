@@ -8,8 +8,11 @@ module.exports = (state, prev, send) => html`
     <div> 
       Actions
       <ul>
-          ${state.history.map((item, idx) => {
-            return html`<li><a href="#" onclick=${e => send('focus', idx)}>${idx} - ${JSON.stringify(item)}</a></li>`
+          ${state.history.map(({actionName, argsPassedToAction, resultingState}, idx) => {
+            return html`
+              <li onclick=${e => send('focus', idx)}>
+                  ${actionName} ${argsPassedToAction}
+              </li>`
           })}
       </ul>
     </div>

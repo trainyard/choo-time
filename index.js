@@ -2,7 +2,8 @@ const choo = require('choo')
 const html = require('choo/html')
 
 const view = choo()
-const completeHistory = []
+const completeHistory = [  {
+}]
 const _isMinimized = true;
 const buttonContainer = document.createElement('div')
 let _focusPayload;
@@ -23,7 +24,7 @@ const leModel = {
       return { history: data }
     },
     focus: (data, state) => {
-      _focusPayload = state.history[data]
+      _focusPayload = state.history[data].resultingState
       focusWasSet = false;
       hostWindow.dispatchEvent(new CustomEvent("UPDATE_HOST_STATE", { detail: true } ))
       return { focusPayload: state.history[data] } 
@@ -67,9 +68,9 @@ function tardis () {
     onError: (err, state, send) => {
       console.error({err, state})
     },
-    onStateChange: (args, state, data, name, send) => { 
+    onStateChange: (args, state, data, prev, send) => { 
       if (prev !== 'refresh') {
-        completeHistory.push(state)
+        completeHistory.push({ actionName: prev, argsPassedToAction: args, resultingState: state })
         window.dispatchEvent(new CustomEvent("UPDATE_STATE", { detail: { completeHistory } } ))
         console.log('onStateChange:', { args, state, data, prev, completeHistory } )
         buttonContainer.innerHTML = ''
