@@ -1,12 +1,11 @@
 {
   "name": "history-view",
   "version": "0.0.0",
-  "main": "client",
+  "main": "index",
   "description": "Created with choo-cli",
   "license": "MIT",
   "scripts": {
-    "build:prod": "scripts/build-prod.sh",
-    "start": "budo ./client.js --live --pushstate --open -- -g es2040",
+    "start": "budo ./index.js --live --pushstate --open -- -g es2040",
     "lint": "standard --verbose | snazzy",
     "test": "npm run lint"
   },
