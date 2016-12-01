@@ -2,8 +2,7 @@ const choo = require('choo')
 const html = require('choo/html')
 
 const view = choo()
-const completeHistory = [  {
-}]
+const completeHistory = []
 const _isMinimized = true;
 const buttonContainer = document.createElement('div')
 let _focusPayload;
