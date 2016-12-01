@@ -39,19 +39,4 @@ This is a count of your actions.
 
 Click on the button and check out the complete timeline of actions for your app
 
-![popped out window](./assets/poppedoutwindow.png)
-
-## Install
-
-Install from npm
- `npm install choo-time --save-dev`
-
-Add choo middleware 
-
-```
-const chooTime = require('choo-time')
-
-app.use(chooTime())
-```
-
-## Contribute
+![popped out window](![screenshot](http://i.imgur.com/eWPtjio.png))
