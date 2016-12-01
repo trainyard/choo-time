@@ -32,12 +32,14 @@ var myModel = {
 start your app and then you should see a red smiley face button
 in the button right of your app. 
 
-add image here
+![happy face](./assets/happyface.png)
 
 Start click through your app and watch the tool button enumerate. 
 This is a count of your actions. 
 
 Click on the button and check out the complete timeline of actions for your app
+
+![popped out window](./assets/poppedoutwindow.png)
 
 ## Install
 
