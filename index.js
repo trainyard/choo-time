@@ -1,5 +1,6 @@
 const choo = require('choo')
 const html = require('choo/html')
+const fileSaver = require('FileSaver.js')
 const { btnStyle, popupStyle } = require('./lib/styles')
 
 const view = choo()
@@ -9,7 +10,7 @@ const buttonContainer = document.createElement('div')
 let _focusPayload;
 const hostWindow = window
 let focusWasSet = false;
-let timelineWindow = null; 
+let timelineWindow = null;
 buttonContainer.id = '__history'
 document.body.appendChild(buttonContainer)
 
@@ -20,14 +21,32 @@ const initialState = {
 const leModel = {
   state: initialState,
   reducers: {
+    export: (_, state) => {
+      let exportData = JSON.stringify({ history: state.history }, null, 2)
+      let blob = new Blob([exportData], { type: "text/plain;charset=utf-8" })
+      let x = new Date()
+      let fileName = `${document.title}-${x.getFullYear()}-${x.getMonth()+1}-${x.getDate()}[${x.getHours()}.${x.getMinutes()}.${x.getSeconds()}]`
+      fileSaver.saveAs(blob, `${fileName}.json`)
+      return state
+    },
     update: (data, state) => {
       return { history: data }
     },
     focus: (data, state) => {
       _focusPayload = state.history[data].resultingState
+      let previousPayload = state.history[data -1]
+      if (previousPayload) {
+
+      }
       focusWasSet = false;
       hostWindow.dispatchEvent(new CustomEvent("UPDATE_HOST_STATE", { detail: true } ))
-      return { focusPayload: state.history[data] } 
+      return { focusPayload: state.history[data] }
+    }
+  },
+  effects: {
+    import: (data, state, send, done) => {
+      const history = JSON.parse(data).history
+      send('update', history, () => send('focus', history.length - 1, done))
     }
   },
   subscriptions: [
@@ -50,7 +69,7 @@ view.router((route) => [
 
 function tardis () {
   buttonContainer.appendChild(_isMinimized ? renderButton() : html`<div id="__choo"></div>`)
-  
+
   return {
     wrapReducers: (reducer) => (data, state) => {
       if (_focusPayload && !focusWasSet) {
@@ -68,7 +87,7 @@ function tardis () {
     onError: (err, state, send) => {
       console.error({err, state})
     },
-    onStateChange: (args, state, data, prev, send) => { 
+    onStateChange: (args, state, data, prev, send) => {
       if (prev !== 'refresh') {
         completeHistory.push({ actionName: prev, argsPassedToAction: args, resultingState: state })
         window.dispatchEvent(new CustomEvent("UPDATE_STATE", { detail: { completeHistory } } ))

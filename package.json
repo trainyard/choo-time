@@ -10,7 +10,8 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "choo": "^3.2.0"
+    "choo": "^3.2.0",
+    "filesaver.js": "^0.2.0"
   },
   "devDependencies": {
     "browserify": "^13.0.1",
