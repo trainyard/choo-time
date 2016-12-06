@@ -1,6 +1,6 @@
 const choo = require('choo')
 const html = require('choo/html')
-const fileSaver = require('FileSaver.js')
+const fileSaver = require('filesaver.js')
 const { btnStyle, popupStyle } = require('./lib/styles')
 
 const view = choo()
